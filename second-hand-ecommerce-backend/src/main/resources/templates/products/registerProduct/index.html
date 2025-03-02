@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creare Produs</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #F5EFE7;
+        }
+        .product-container {
+            max-width: 500px;
+            margin: auto;
+            margin-top: 10vh;
+            padding: 20px;
+            border: 1px solid #213555;
+            box-shadow: 10px 10px black;
+            border-radius: 10px;
+            background-color: #3E5879;
+        }
+        .custom-file-input ~ .custom-file-label::after {
+            content: "Alegeți fișier";
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="product-container">
+        <h1 class="text-center" style="color: white">Creare Anunț</h1>
+        <form action="/products/registerProduct" method="post" th:object="${productBody}" enctype="multipart/form-data">
+            <div class="form-group">
+                <label style="color: white" for="name">Nume</label>
+                <input type="text" class="form-control" id="name" th:field="*{name}" >
+                <div th:if="${nameError}" class="alert alert-danger mt-2" th:text="${nameError}"></div>
+            </div>
+            <div class="form-group">
+                <label style="color: white" for="description">Descriere</label>
+                <textarea class="form-control" id="description" style="resize: none; min-height: 150px" th:field="*{description}"></textarea>
+                <div th:if="${descriptionError}" class="alert alert-danger mt-2" th:text="${descriptionError}"></div>
+            </div>
+            <div class="form-group">
+                <label style="color: white" for="price">Preț</label>
+                <input type="number" step="0.1" class="form-control" id="price" th:field="*{price}">
+                <div th:if="${priceError}" class="alert alert-danger mt-2" th:text="${priceError}"></div>
+            </div>
+            <div class="form-group">
+                <label style="color: white" for="image">Imagine</label>
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="image" name="image">
+                    <label class="custom-file-label" for="image">Alegeți fișier</label>
+                </div>
+                <div th:if="${imageError}" class="alert alert-danger mt-2" th:text="${imageError}"></div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block" style="background-color: #213555; border-color: #213555">Creare Anunț</button>
+        </form>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    // Update the label of the file input when a file is selected
+    $(".custom-file-input").on("change", function() {
+        var fileName = $(this).val().split("\\").pop();
+        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    });
+</script>
+</body>
+</html>
